@@ -5,6 +5,7 @@ var	array< class<KFPawn_Monster> > ExtraBossClassList;
 
 var config bool ForceOutbreakWaves;
 var config bool ForceSpecialWaves;
+var config bool ForceObjectiveCompletion;
 var config int ConfigVersion;
 
 event InitGame( string Options, out string ErrorMessage )
@@ -19,11 +20,18 @@ event InitGame( string Options, out string ErrorMessage )
     ExtraBossClassList[BAT_Matriarch] = class'Endless_Encore.EE_Matriarch';
 }
 
+event PreBeginPlay()
+{
+    GameReplicationInfoClass = class'Endless_Encore.EE_GameReplicationInfo';
+	super.PreBeginPlay();
+}
+
 protected function SetupConfig(string Options) {
     if(ConfigVersion < 1)
     {
         ForceOutbreakWaves = true;
         ForceSpecialWaves = true;
+        ForceObjectiveCompletion = true;
         ConfigVersion = 1;
     }
 
@@ -35,6 +43,11 @@ protected function SetupConfig(string Options) {
     if(HasOption(Options, "ForceSpecialWaves"))
     {
         ForceSpecialWaves = bool(ParseOption(Options, "ForceSpecialWaves"));
+    }
+
+    if(HasOption(Options, "ForceObjectiveCompletion"))
+    {
+        ForceObjectiveCompletion = bool(ParseOption(Options, "ForceObjectiveCompletion"));
     }
 
     SaveConfig();
