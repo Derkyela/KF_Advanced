@@ -1,6 +1,8 @@
 class EE_Endless extends KFGameInfo_Endless
     config(Endless_Encore);
 
+var	array< class<KFPawn_Monster> > ExtraBossClassList;
+
 var config bool ForceOutbreakWaves;
 var config bool ForceSpecialWaves;
 var config int ConfigVersion;
@@ -9,6 +11,12 @@ event InitGame( string Options, out string ErrorMessage )
 {
 	Super.InitGame( Options, ErrorMessage );
     SetupConfig(Options);
+
+    ExtraBossClassList[BAT_Hans] = class'Endless_Encore.EE_Hans';
+    ExtraBossClassList[BAT_Patriarch] = class'Endless_Encore.EE_Patriarch';
+    ExtraBossClassList[BAT_KingFleshpound] = class'Endless_Encore.EE_FleshpoundKing';
+    ExtraBossClassList[BAT_KingBloat] = class'Endless_Encore.EE_BloatKing';
+    ExtraBossClassList[BAT_Matriarch] = class'Endless_Encore.EE_Matriarch';
 }
 
 protected function SetupConfig(string Options) {
@@ -59,6 +67,25 @@ function WaveStarted()
     }
 
 	super.WaveStarted();
+
+    if(MyKFGRI.IsBossWave())
+    {
+        SetTimer(15, false, 'AddExtraBosses');
+    }
+}
+
+function AddExtraBosses()
+{
+    local int I;
+    local int AmountBosses;
+    local array< class<KFPawn_Monster> > ExtraBosses;
+
+    AmountBosses = FCeil(float(MyKFGRI.WaveNum) / 10);
+    for(I = 1; I < AmountBosses; I++)
+    {
+        ExtraBosses.AddItem(ExtraBossClassList[Rand(ExtraBossClassList.Length)]);
+        SpawnManager.SpawnSquad(ExtraBosses);
+    }
 }
 
 function bool TrySetNextWaveSpecial()
@@ -118,6 +145,22 @@ function bool TrySetNextWaveSpecial()
     {
         return super.TrySetNextWaveSpecial();
     }
+}
+
+function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
+{
+    local KFPawn_MonsterBoss Boss;
+    DramaticEvent(1);
+
+    foreach WorldInfo.AllPawns(class'KFPawn_MonsterBoss', Boss)
+    {
+        if(Boss.Health > 0)
+        {            
+            return;
+        }
+    }        
+
+    super.BossDied(Killer, bCheckWaveEnded);
 }
 
 defaultproperties {
