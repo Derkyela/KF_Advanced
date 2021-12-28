@@ -42,27 +42,30 @@ protected function SetupConfig(string Options) {
 
 function WaveStarted()
 {
-    if (ForceOutbreakWaves && ForceSpecialWaves)
+    if(!MyKFGRI.IsBossWave())
     {
-        if (bool(Rand(2)))
+        if (ForceOutbreakWaves && ForceSpecialWaves)
         {
-            bForceOutbreakWave = true;
+            if (bool(Rand(2)))
+            {
+                bForceOutbreakWave = true;
+            }
+            else
+            {
+                bForceSpecialWave = true;
+            }
         }
         else
         {
-            bForceSpecialWave = true;
-        }
-    }
-    else
-    {
-        if (ForceOutbreakWaves)
-        {
-            bForceOutbreakWave = true;
-        }
+            if (ForceOutbreakWaves)
+            {
+                bForceOutbreakWave = true;
+            }
 
-        if (ForceSpecialWaves)
-        {
-            bForceSpecialWave = true;
+            if (ForceSpecialWaves)
+            {
+                bForceSpecialWave = true;
+            }
         }
     }
 
