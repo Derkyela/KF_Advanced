@@ -1,7 +1,8 @@
 class EE_Endless extends KFGameInfo_Endless
     config(Endless_Encore);
 
-var	array< class<KFPawn_Monster> > ExtraBossClassList;
+var	transient array< class<KFPawn_Monster> > ExtraBossClassList;
+var transient bool IsWaveStart;
 
 var config bool ForceOutbreakWaves;
 var config bool ForceSpecialWaves;
@@ -55,31 +56,11 @@ protected function SetupConfig(string Options) {
 
 function WaveStarted()
 {
-    if(!MyKFGRI.IsBossWave())
-    {
-        if (ForceOutbreakWaves && ForceSpecialWaves)
-        {
-            if (bool(Rand(2)))
-            {
-                bForceOutbreakWave = true;
-            }
-            else
-            {
-                bForceSpecialWave = true;
-            }
-        }
-        else
-        {
-            if (ForceOutbreakWaves)
-            {
-                bForceOutbreakWave = true;
-            }
+    IsWaveStart = true;
 
-            if (ForceSpecialWaves)
-            {
-                bForceSpecialWave = true;
-            }
-        }
+    if(MyKFGRI.WaveNum == 1)
+    {
+        ForceSpecialOrOutbreakIfConfigured();
     }
 
 	super.WaveStarted();
@@ -87,6 +68,36 @@ function WaveStarted()
     if(MyKFGRI.IsBossWave())
     {
         SetTimer(15, false, 'AddExtraBosses');
+    }
+}
+
+protected function ForceSpecialOrOutbreakIfConfigured()
+{
+    if(!bForceOutbreakWave && !bForceSpecialWave)
+    {
+        if (ForceOutbreakWaves && ForceSpecialWaves)
+        {
+            if (bool(Rand(2)) && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode == INDEX_NONE)
+            {
+                bForceOutbreakWave = true;
+            }
+            else if(KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode == INDEX_NONE)
+            {
+                bForceSpecialWave = true;
+            }
+        }
+        else
+        {
+            if (ForceOutbreakWaves && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode == INDEX_NONE)
+            {
+                bForceOutbreakWave = true;
+            }
+
+            if (ForceSpecialWaves && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode == INDEX_NONE)
+            {
+                bForceSpecialWave = true;
+            }
+        }
     }
 }
 
@@ -106,61 +117,18 @@ function AddExtraBosses()
 
 function bool TrySetNextWaveSpecial()
 {
-	local float OutbreakPct, SpecialWavePct;
-	local int OutbreakEventIdx;
-
-    //Originally it is not allowed to have a special or outbreak wave right before the boss
-    //so if the next wave is the boss we do it anyway, otherwise we use the core method
-	if (MyKFGRI.IsBossWaveNext())
+    if ((!MyKFGRI.IsBossWave() || !IsWaveStart) && !MyKFGRI.IsBossWaveNext() && !(MyKFGRI.WaveNum == 1 && IsWaveStart))
 	{
-		OutbreakPct = EndlessDifficulty.GetOutbreakPctChance();
-        SpecialWavePct = EndlessDifficulty.GetSpeicalWavePctChance();
-        if (bForceOutbreakWave || (WaveNum >= OutbreakWaveStart && OutbreakPct > 0.f && FRand() < OutbreakPct))
-        {
-            if(DebugForcedOutbreakIdx == INDEX_NONE)
-            {
-                OutbreakEventIdx = Rand(OutbreakEvent.SetEvents.length);
-            }
-            else
-            {
-                `log("Forcing Outbreak" @ DebugForcedOutbreakIdx);
-                OutbreakEventIdx = DebugForcedOutbreakIdx;
-            }
-            KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode = OutbreakEventIdx;
-            bForceOutbreakWave = false;
-            DebugForcedOutbreakIdx = INDEX_NONE;
-            return true;
-        }
-        else if (bForceSpecialWave || (WaveNum >= SpecialWaveStart && SpecialWavePct > 0.f && FRand() < SpecialWavePct))
-        {
-            bUseSpecialWave = true;
-            if(DebugForceSpecialWaveZedType == INDEX_NONE)
-            {
-                SpecialWaveType = EndlessDifficulty.GetSpecialWaveType();
-            }
-            else
-            {
-                `log("Forcing Special Wave Type" @ EAIType(DebugForceSpecialWaveZedType));
-                SpecialWaveType = EAIType(DebugForceSpecialWaveZedType);
-            }
-            KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode = SpecialWaveType;
-            bForceSpecialWave = false;
-            DebugForceSpecialWaveZedType = INDEX_NONE;
-            return true;
-        }
-
-        bForceOutbreakWave = false;
-        bForceSpecialWave = false;
-
-        DebugForcedOutbreakIdx = INDEX_NONE;
-        DebugForceSpecialWaveZedType = INDEX_NONE;
-
-        return false;
+		ForceSpecialOrOutbreakIfConfigured();
 	}
-    else
-    {
-        return super.TrySetNextWaveSpecial();
-    }
+
+    return super.TrySetNextWaveSpecial();
+}
+
+function WaveEnded(EWaveEndCondition WinCondition)
+{
+    IsWaveStart = false;
+    super.WaveEnded(WinCondition);
 }
 
 function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
