@@ -73,27 +73,27 @@ function WaveStarted()
 
 protected function ForceSpecialOrOutbreakIfConfigured()
 {
-    if(!bForceOutbreakWave && !bForceSpecialWave)
+    if(!bForceOutbreakWave && !bForceSpecialWave && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode == INDEX_NONE && !bUseSpecialWave && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode == INDEX_NONE)
     {
         if (ForceOutbreakWaves && ForceSpecialWaves)
         {
-            if (bool(Rand(2)) && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode == INDEX_NONE)
+            if (bool(Rand(2)))
             {
                 bForceOutbreakWave = true;
             }
-            else if(KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode == INDEX_NONE)
+            else
             {
                 bForceSpecialWave = true;
             }
         }
         else
         {
-            if (ForceOutbreakWaves && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode == INDEX_NONE)
+            if (ForceOutbreakWaves)
             {
                 bForceOutbreakWave = true;
             }
 
-            if (ForceSpecialWaves && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode == INDEX_NONE)
+            if (ForceSpecialWaves)
             {
                 bForceSpecialWave = true;
             }
@@ -138,7 +138,7 @@ function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
 
     foreach WorldInfo.AllPawns(class'KFPawn_MonsterBoss', Boss)
     {
-        if(Boss.Health > 0)
+        if(Boss.IsAliveAndWell())
         {            
             return;
         }
