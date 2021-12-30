@@ -107,7 +107,7 @@ function AddExtraBosses()
     local int AmountBosses;
     local array< class<KFPawn_Monster> > ExtraBosses;
 
-    AmountBosses = FCeil(float(MyKFGRI.WaveNum) / 10);
+    AmountBosses = FCeil(float(MyKFGRI.WaveNum + 1) / 10);
     for(I = 1; I < AmountBosses; I++)
     {
         ExtraBosses.AddItem(ExtraBossClassList[Rand(ExtraBossClassList.Length)]);
