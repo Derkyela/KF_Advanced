@@ -11,6 +11,8 @@ var config int ConfigVersion;
 
 event InitGame( string Options, out string ErrorMessage )
 {
+    HUDType=class'Endless_Encore.EE_KFGFXHudWrapper';
+
 	Super.InitGame( Options, ErrorMessage );
     SetupConfig(Options);
 
@@ -27,7 +29,8 @@ event PreBeginPlay()
 	super.PreBeginPlay();
 }
 
-protected function SetupConfig(string Options) {
+protected function SetupConfig(string Options)
+{
     if(ConfigVersion < 1)
     {
         ForceOutbreakWaves = true;
@@ -133,21 +136,17 @@ function WaveEnded(EWaveEndCondition WinCondition)
 
 function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
 {
-    local KFPawn_MonsterBoss Boss;
+    local KFPawn_Monster Pawn;
+    
     DramaticEvent(1);
 
-    foreach WorldInfo.AllPawns(class'KFPawn_MonsterBoss', Boss)
+    foreach WorldInfo.AllPawns(class'KFPawn_Monster', Pawn)
     {
-        if(Boss.IsAliveAndWell())
-        {            
+        if(Pawn.IsABoss() && Pawn.IsAliveAndWell())
+        {
             return;
         }
-    }        
+    }
 
     super.BossDied(Killer, bCheckWaveEnded);
-}
-
-defaultproperties {
-    SpecialWaveStart=1
-	OutbreakWaveStart=1
 }
