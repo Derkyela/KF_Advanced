@@ -100,8 +100,8 @@ function AddExtraBosses()
     for(I = 1; I < AmountBosses; I++)
     {
         ExtraBosses.AddItem(ExtraBossClassList[Rand(ExtraBossClassList.Length)]);
+        SpawnManager.SpawnSquad(ExtraBosses);
     }
-    SpawnManager.SpawnSquad(ExtraBosses);
 }
 
 function bool TrySetNextWaveSpecial()

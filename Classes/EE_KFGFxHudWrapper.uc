@@ -32,17 +32,24 @@ protected function DrawExtraBossHealtBars()
     local KFPawn_MonsterBoss Boss;
     local KFPawn_ZedFleshpoundKing KingFP;
     local Color BarColor;
+    local KFPlayerController LocalKFPC;
 
     YOffset = 450;
     foreach WorldInfo.AllPawns(class'KFPawn_Monster', Pawn)
     {
         if(Pawn.IsABoss() && Pawn.IsAliveAndWell())
         {   
+            LocalKFPC = KFPlayerController(GetALocalPlayerController());
             Boss = none;
             KingFP = none;
             XL = 0;
             YL = 0;
             BarColor = NonPlayerHealth;
+
+            if(LocalKFPC.MyGFxHUD != none && LocalKFPC.MyGFxHUD.BossHealthBar != none && LocalKFPC.MyGFxHUD.BossHealthBar.BossPawn.GetMonsterPawn() == Pawn)
+            {
+                continue;
+            }
 
             if(KFPawn_MonsterBoss(Pawn) != none)
             {
@@ -115,4 +122,6 @@ DefaultProperties
     BarHeight = 25;
     BarWidth = 400;
     XOffset = 20;
+
+    HUDClass=class'Endless_Encore.EE_KFGFxMoviePlayer_HUD';
 }
