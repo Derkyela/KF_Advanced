@@ -1,4 +1,5 @@
-class EE_Hans extends KFPawn_ZedHans;
+class EE_Hans extends KFPawn_ZedHans
+    implements(EE_BossInterface);
 
 simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, optional Pawn InInteractionPawn, optional INT InSpecialMoveFlags, optional bool bSkipReplication)
 {

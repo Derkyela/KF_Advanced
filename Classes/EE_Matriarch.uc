@@ -1,4 +1,11 @@
-class EE_Matriarch extends KFPawn_ZedMatriarch;
+class EE_Matriarch extends KFPawn_ZedMatriarch
+    implements(EE_BossInterface);
+
+simulated event PreBeginPlay()
+{
+    //ArmorInfoClass = class'Endless_Encore.EE_KFZedArmorInfo_Matriarch';
+    super.PreBeginPlay();
+}
 
 simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, optional Pawn InInteractionPawn, optional INT InSpecialMoveFlags, optional bool bSkipReplication)
 {

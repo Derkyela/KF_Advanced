@@ -1,0 +1,1 @@
+interface EE_BossInterface;

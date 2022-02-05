@@ -1,4 +1,5 @@
-class EE_FleshpoundKing extends KFPawn_ZedFleshpoundKing;
+class EE_FleshpoundKing extends KFPawn_ZedFleshpoundKing
+    implements(EE_BossInterface);
 
 simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, optional Pawn InInteractionPawn, optional INT InSpecialMoveFlags, optional bool bSkipReplication)
 {

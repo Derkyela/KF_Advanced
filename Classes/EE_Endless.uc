@@ -114,8 +114,8 @@ function AddExtraBosses()
     for(I = 1; I < AmountBosses; I++)
     {
         ExtraBosses.AddItem(ExtraBossClassList[Rand(ExtraBossClassList.Length)]);
-        SpawnManager.SpawnSquad(ExtraBosses);
     }
+    SpawnManager.SpawnSquad(ExtraBosses);
 }
 
 function bool TrySetNextWaveSpecial()
@@ -149,4 +149,18 @@ function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
     }
 
     super.BossDied(Killer, bCheckWaveEnded);
+}
+
+function bool CheckRelevance(Actor Other)
+{
+    local KFDroppedPickup Weapon;
+    
+    Weapon = KFDroppedPickup(Other);
+
+	if ( None != Weapon )
+	{
+		Weapon.Lifespan = 86400;
+	}
+
+    return super.CheckRelevance(Other);;
 }
