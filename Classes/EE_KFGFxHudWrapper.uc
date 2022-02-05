@@ -1,5 +1,9 @@
 class EE_KFGFxHudWrapper extends KFGFxHudWrapper;
 
+var const float BarHeight;
+var const float BarWidth;
+var const float XOffset;
+
 var transient protected EE_Endless KFGI;
 var array <Color> BattlePhaseColors;
 
@@ -23,16 +27,11 @@ event DrawHUD() {
 
 protected function DrawExtraBossHealtBars()
 {
-    local float BarHeight, XL, YL, XOffset, YOffset;
+    local float XL, YL, YOffset;
     local KFPawn_Monster Pawn;
     local KFPawn_MonsterBoss Boss;
     local KFPawn_ZedFleshpoundKing KingFP;
-    local KFPawn_ZedMatriarch Matriarch;
-    local KFPawn_ZedHans Hans;
     local Color BarColor;
-
-    BarHeight = 25;
-    XOffset = 20;
 
     YOffset = 450;
     foreach WorldInfo.AllPawns(class'KFPawn_Monster', Pawn)
@@ -41,8 +40,6 @@ protected function DrawExtraBossHealtBars()
         {   
             Boss = none;
             KingFP = none;
-            Matriarch = none;
-            Hans = none;
             XL = 0;
             YL = 0;
             BarColor = NonPlayerHealth;
@@ -65,38 +62,57 @@ protected function DrawExtraBossHealtBars()
             Canvas.DrawText(Pawn.GetLocalizedName(), true, 1.0, 1.0);
             YOffset = YOffset + YL + 10;
 
-            DrawKFBar(Pawn.GetHealthPercentage(), 400, BarHeight, XOffset, YOffset, BarColor);
-
-            if(KFPawn_ZedMatriarch(Pawn) != none)
-            {
-                Matriarch = KFPawn_ZedMatriarch(Pawn);
-                if(Matriarch.bShieldUp)
-                {
-                    Canvas.SetDrawColorStruct(ArmorColor);
-	                Canvas.SetPos(XOffset, YOffset + 1);
-	                Canvas.DrawTile(PlayerStatusBarBGTexture, (400 - 2.0) * ByteToFloat(Matriarch.ShieldHealthPctByte), BarHeight - 2.0, 0, 0, 32, 32);
-                }
-            }
-
-            if(KFPawn_ZedHans(Pawn) != none)
-            {
-                Hans = KFPawn_ZedHans(Pawn);
-                if(Hans.bInHuntAndHealMode)
-                {
-                    Canvas.SetDrawColorStruct(ArmorColor);
-	                Canvas.SetPos(XOffset, YOffset + 1);
-	                Canvas.DrawTile(PlayerStatusBarBGTexture, (400 - 2.0) * ByteToFloat(Hans.ShieldHealthPctByte), BarHeight - 2.0, 0, 0, 32, 32);
-                }
-            }
-
-            if(KingFP != none && KingFP.ShieldHealth > 0)
-            {
-                Canvas.SetDrawColorStruct(ArmorColor);
-                Canvas.SetPos(XOffset, YOffset + 1);
-                Canvas.DrawTile(PlayerStatusBarBGTexture, (400 - 2.0) * ByteToFloat(KingFP.ShieldHealthPctByte), BarHeight - 2.0, 0, 0, 32, 32);
-            }
+            DrawKFBar(Pawn.GetHealthPercentage(), BarWidth, BarHeight, XOffset, YOffset, BarColor);
+            DrawShield(Pawn, YOffset);
 
             YOffset = YOffset + BarHeight + 20;
         }
     }
+}
+
+protected function DrawShield(KFPawn_Monster Pawn, float YOffset)
+{
+    local KFPawn_ZedFleshpoundKing KingFP;
+    local KFPawn_ZedMatriarch Matriarch;
+    local KFPawn_ZedHans Hans;
+
+    if(KFPawn_ZedMatriarch(Pawn) != none)
+    {
+        Matriarch = KFPawn_ZedMatriarch(Pawn);
+        if(Matriarch.bShieldUp)
+        {
+            Canvas.SetDrawColorStruct(ArmorColor);
+            Canvas.SetPos(XOffset, YOffset + 1);
+            Canvas.DrawTile(PlayerStatusBarBGTexture, (BarWidth - 2.0) * ByteToFloat(Matriarch.ShieldHealthPctByte), BarHeight - 2.0, 0, 0, 32, 32);
+        }
+    }
+
+    if(KFPawn_ZedHans(Pawn) != none)
+    {
+        Hans = KFPawn_ZedHans(Pawn);
+        if(Hans.bInHuntAndHealMode)
+        {
+            Canvas.SetDrawColorStruct(ArmorColor);
+            Canvas.SetPos(XOffset, YOffset + 1);
+            Canvas.DrawTile(PlayerStatusBarBGTexture, (BarWidth - 2.0) * ByteToFloat(Hans.ShieldHealthPctByte), BarHeight - 2.0, 0, 0, 32, 32);
+        }
+    }
+
+    if(KFPawn_ZedFleshpoundKing(Pawn) != none)
+    {
+        KingFP = KFPawn_ZedFleshpoundKing(Pawn);
+        if(KingFP.ShieldHealth > 0)
+        {
+            Canvas.SetDrawColorStruct(ArmorColor);
+            Canvas.SetPos(XOffset, YOffset + 1);
+            Canvas.DrawTile(PlayerStatusBarBGTexture, (BarWidth - 2.0) * ByteToFloat(KingFP.ShieldHealthPctByte), BarHeight - 2.0, 0, 0, 32, 32);
+        }
+    }
+}
+
+DefaultProperties
+{
+    BarHeight = 25;
+    BarWidth = 400;
+    XOffset = 20;
 }

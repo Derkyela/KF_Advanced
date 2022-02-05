@@ -11,22 +11,8 @@ var config int ConfigVersion;
 
 event InitGame( string Options, out string ErrorMessage )
 {
-    HUDType=class'Endless_Encore.EE_KFGFXHudWrapper';
-
-	Super.InitGame( Options, ErrorMessage );
+    Super.InitGame( Options, ErrorMessage );
     SetupConfig(Options);
-
-    ExtraBossClassList[BAT_Hans] = class'Endless_Encore.EE_Hans';
-    ExtraBossClassList[BAT_Patriarch] = class'Endless_Encore.EE_Patriarch';
-    ExtraBossClassList[BAT_KingFleshpound] = class'Endless_Encore.EE_FleshpoundKing';
-    ExtraBossClassList[BAT_KingBloat] = class'Endless_Encore.EE_BloatKing';
-    ExtraBossClassList[BAT_Matriarch] = class'Endless_Encore.EE_Matriarch';
-}
-
-event PreBeginPlay()
-{
-    GameReplicationInfoClass = class'Endless_Encore.EE_GameReplicationInfo';
-	super.PreBeginPlay();
 }
 
 protected function SetupConfig(string Options)
@@ -163,4 +149,16 @@ function bool CheckRelevance(Actor Other)
 	}
 
     return super.CheckRelevance(Other);;
+}
+
+DefaultProperties
+{
+    GameReplicationInfoClass=class'Endless_Encore.EE_GameReplicationInfo';
+    HUDType=class'Endless_Encore.EE_KFGFXHudWrapper';
+
+    ExtraBossClassList(BAT_Hans)=class'Endless_Encore.EE_Hans';
+    ExtraBossClassList(BAT_Patriarch)=class'Endless_Encore.EE_Patriarch';
+    ExtraBossClassList(BAT_KingFleshpound)=class'Endless_Encore.EE_FleshpoundKing';
+    ExtraBossClassList(BAT_KingBloat)=class'Endless_Encore.EE_BloatKing';
+    ExtraBossClassList(BAT_Matriarch)=class'Endless_Encore.EE_Matriarch';
 }
