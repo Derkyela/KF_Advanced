@@ -11,6 +11,11 @@ simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, op
     super.DoSpecialMove(NewMove, bForceMove, InInteractionPawn, InSpecialMoveFlags, bSkipReplication);
 }
 
+function PlayBossMusic()
+{
+	//Only play the music from the initial boss
+}
+
 DefaultProperties
 {
     ArmorInfoClass=class'Endless_Encore.EE_KFZedArmorInfo_BloatKing';
