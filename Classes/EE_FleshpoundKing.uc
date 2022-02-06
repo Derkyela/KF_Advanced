@@ -10,3 +10,14 @@ simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, op
 
     super.DoSpecialMove(NewMove, bForceMove, InInteractionPawn, InSpecialMoveFlags, bSkipReplication);
 }
+
+simulated function UpdateShieldUI()
+{
+    local KFPlayerController KFPC;
+
+    KFPC = KFPlayerController(GetALocalPlayerController());
+    if (KFPC != none && KFPC.MyGFxHUD != none && KFPC.MyGFxHUD.bossHealthBar != none && KFPC.MyGFxHUD.bossHealthBar.BossPawn != none && KFPC.MyGFxHUD.bossHealthBar.BossPawn.GetMonsterPawn() == self)
+	{
+		super.UpdateShieldUI();
+	}
+}
