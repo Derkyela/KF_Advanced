@@ -13,7 +13,7 @@ simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, op
 
 simulated function UpdateShieldUI()
 {
-    if (IsBossPawnOfBossHealthBar)
+    if (IsBossPawnOfBossHealthBar())
 	{
 		super.UpdateShieldUI();
 	}
