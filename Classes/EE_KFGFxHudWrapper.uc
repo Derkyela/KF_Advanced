@@ -30,7 +30,6 @@ protected function DrawExtraBossHealtBars()
     local float XL, YL, YOffset;
     local KFPawn_Monster Pawn;
     local KFPawn_MonsterBoss Boss;
-    local KFPawn_ZedFleshpoundKing KingFP;
     local Color BarColor;
     local KFPlayerController LocalKFPC;
 
@@ -41,7 +40,6 @@ protected function DrawExtraBossHealtBars()
         {   
             LocalKFPC = KFPlayerController(GetALocalPlayerController());
             Boss = none;
-            KingFP = none;
             XL = 0;
             YL = 0;
             BarColor = NonPlayerHealth;
@@ -55,10 +53,6 @@ protected function DrawExtraBossHealtBars()
             {
                 Boss = KFPawn_MonsterBoss(Pawn);
                 BarColor = BattlePhaseColors[Max(Boss.GetCurrentBattlePhase() - 1, 0)];
-            }
-            else if(KFPawn_ZedFleshpoundKing(Pawn) != none) {
-                KingFP = KFPawn_ZedFleshpoundKing(Pawn);
-                BarColor = BattlePhaseColors[Max(KingFP.CurrentPhase - 1, 0)];
             }
 
             Canvas.Font = class'Engine'.Static.GetMediumFont();

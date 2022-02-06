@@ -67,17 +67,11 @@ function OnNamePlateHidden()
 protected function SetBattlePhase()
 {
     local KFPawn_MonsterBoss MonsterBoss;
-    local KFPawn_ZedFleshpoundKing KingFp;
 
     if(KFPawn_MonsterBoss(BossPawn) != none)
     {
         MonsterBoss = KFPawn_MonsterBoss(BossPawn);
         UpdateBossBattlePhase(MonsterBoss.GetCurrentBattlePhase());
-    }
-    else if(KFPawn_ZedFleshpoundKing(BossPawn) != none)
-    {
-        KingFP = KFPawn_ZedFleshpoundKing(BossPawn);
-        UpdateBossBattlePhase(KingFp.CurrentPhase);
     }
     else
     {
