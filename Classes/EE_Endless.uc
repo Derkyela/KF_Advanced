@@ -92,15 +92,17 @@ protected function ForceSpecialOrOutbreakIfConfigured()
 
 function AddExtraBosses()
 {
-    local int I;
+    local int BossesSpawned;
     local int AmountBosses;
     local array< class<KFPawn_Monster> > ExtraBosses;
 
+    BossesSpawned = 1;
+
     AmountBosses = FCeil(float(MyKFGRI.WaveNum + 1) / 10);
-    for(I = 1; I < AmountBosses; I++)
+    while(BossesSpawned < AmountBosses)
     {
         ExtraBosses.AddItem(ExtraBossClassList[Rand(ExtraBossClassList.Length)]);
-        SpawnManager.SpawnSquad(ExtraBosses);
+        BossesSpawned += SpawnManager.SpawnSquad(ExtraBosses);
     }
 }
 
