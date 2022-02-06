@@ -140,12 +140,14 @@ function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
 function bool CheckRelevance(Actor Other)
 {
     local KFDroppedPickup Weapon;
-    
-    Weapon = KFDroppedPickup(Other);
 
-	if ( None != Weapon )
+	if(KFDroppedPickup(Other) != None)
 	{
-		Weapon.Lifespan = 86400;
+        if(!Weapon.bEmptyPickup)
+        {
+            Weapon = KFDroppedPickup(Other);
+		    Weapon.Lifespan = 86400;
+        }
 	}
 
     return super.CheckRelevance(Other);;
