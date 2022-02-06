@@ -108,7 +108,7 @@ protected function DrawShield(KFPawn_Monster Pawn, float YOffset)
     if(KFPawn_ZedFleshpoundKing(Pawn) != none)
     {
         KingFP = KFPawn_ZedFleshpoundKing(Pawn);
-        if(KingFP.ShieldHealth > 0)
+        if(ByteToFloat(KingFP.ShieldHealthPctByte) > 0)
         {
             Canvas.SetDrawColorStruct(ArmorColor);
             Canvas.SetPos(XOffset, YOffset + 1);
