@@ -2,7 +2,6 @@ class EE_Endless extends KFGameInfo_Endless
     config(Endless_Encore);
 
 var	transient array< class<KFPawn_Monster> > ExtraBossClassList;
-var transient bool IsWaveStart;
 
 var config bool ForceOutbreakWaves;
 var config bool ForceSpecialWaves;
@@ -60,14 +59,15 @@ protected function SetupConfig(string Options)
 
 function WaveStarted()
 {
-    IsWaveStart = true;
-
-    if(MyKFGRI.WaveNum == 1)
+    if(KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode == INDEX_NONE && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode == INDEX_NONE)
     {
         ForceSpecialOrOutbreakIfConfigured();
     }
 
 	super.WaveStarted();
+
+    bForceOutbreakWave = false;
+    bForceSpecialWave = false;
 
     if(MyKFGRI.IsBossWave())
     {
@@ -77,7 +77,7 @@ function WaveStarted()
 
 protected function ForceSpecialOrOutbreakIfConfigured()
 {
-    if(!bForceOutbreakWave && !bForceSpecialWave && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode == INDEX_NONE && !bUseSpecialWave && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode == INDEX_NONE)
+    if(!bForceOutbreakWave && !bForceSpecialWave)
     {
         if (ForceOutbreakWaves && ForceSpecialWaves)
         {
@@ -105,6 +105,16 @@ protected function ForceSpecialOrOutbreakIfConfigured()
     }
 }
 
+function bool TrySetNextWaveSpecial()
+{
+    if(KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode == INDEX_NONE && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode == INDEX_NONE)
+    {
+        ForceSpecialOrOutbreakIfConfigured();
+    }
+
+    return super.TrySetNextWaveSpecial();
+}
+
 function AddExtraBosses()
 {
     local int BossesSpawned;
@@ -119,22 +129,6 @@ function AddExtraBosses()
         ExtraBosses.AddItem(ExtraBossClassList[Rand(ExtraBossClassList.Length)]);
         BossesSpawned += SpawnManager.SpawnSquad(ExtraBosses);
     }
-}
-
-function bool TrySetNextWaveSpecial()
-{
-    if ((!MyKFGRI.IsBossWave() || !IsWaveStart) && !MyKFGRI.IsBossWaveNext() && !(MyKFGRI.WaveNum == 1 && IsWaveStart))
-	{
-		ForceSpecialOrOutbreakIfConfigured();
-	}
-
-    return super.TrySetNextWaveSpecial();
-}
-
-function WaveEnded(EWaveEndCondition WinCondition)
-{
-    IsWaveStart = false;
-    super.WaveEnded(WinCondition);
 }
 
 function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
