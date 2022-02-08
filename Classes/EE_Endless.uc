@@ -7,6 +7,8 @@ var transient bool IsWaveStart;
 var config bool ForceOutbreakWaves;
 var config bool ForceSpecialWaves;
 var config bool ForceObjectiveCompletion;
+var config bool AllowVersus;
+var config byte StartVersusWave;
 var config int ConfigVersion;
 
 event InitGame( string Options, out string ErrorMessage )
@@ -22,6 +24,8 @@ protected function SetupConfig(string Options)
         ForceOutbreakWaves = true;
         ForceSpecialWaves = true;
         ForceObjectiveCompletion = true;
+        AllowVersus = true;
+        StartVersusWave = 11;
         ConfigVersion = 1;
     }
 
@@ -39,6 +43,17 @@ protected function SetupConfig(string Options)
     {
         ForceObjectiveCompletion = bool(ParseOption(Options, "ForceObjectiveCompletion"));
     }
+
+    if(HasOption(Options, "AllowVersus"))
+    {
+        AllowVersus = bool(ParseOption(Options, "AllowVersus"));
+    }
+
+    if(HasOption(Options, "StartVersusWave"))
+    {
+        StartVersusWave = Byte(ParseOption(Options, "StartVersusWave"));
+    }
+
 
     SaveConfig();
 }
@@ -157,6 +172,7 @@ function bool CheckRelevance(Actor Other)
 
 DefaultProperties
 {
+    SpawnManagerClasses(0)=class'Endless_Encore.EE_KFAISpawnManager_Endless';
     GameReplicationInfoClass=class'Endless_Encore.EE_GameReplicationInfo';
     HUDType=class'Endless_Encore.EE_KFGFXHudWrapper';
 
