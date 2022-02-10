@@ -166,6 +166,7 @@ function bool CheckRelevance(Actor Other)
 
 DefaultProperties
 {
+    PlayerControllerClass=class'Endless_Encore.EE_KFPlayerController';
     SpawnManagerClasses(0)=class'Endless_Encore.EE_KFAISpawnManager_Endless';
     GameReplicationInfoClass=class'Endless_Encore.EE_GameReplicationInfo';
     HUDType=class'Endless_Encore.EE_KFGFXHudWrapper';
