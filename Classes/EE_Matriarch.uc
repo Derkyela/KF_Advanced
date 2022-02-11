@@ -41,4 +41,5 @@ protected function bool IsBossPawnOfBossHealthBar()
 DefaultProperties
 {
     ArmorInfoClass = class'Endless_Encore.EE_KFZedArmorInfo_Matriarch';
+    ControllerClass = class'Endless_Encore.EE_KFAIController_ZedMatriarch';
 }
