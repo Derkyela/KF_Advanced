@@ -23,7 +23,6 @@ function TickHud(float DeltaTime)
         BossPawn = BossList[0];
         SetBossName(BossPawn.GetMonsterPawn().static.GetLocalizedName());
         SetBossIcon();
-        SetBattlePhase();
 
         if(BossPawn.GetMonsterPawn().ArmorInfo != none)
         {
@@ -34,7 +33,9 @@ function TickHud(float DeltaTime)
     if(BossPawn != none && !BossPawn.GetMonsterPawn().IsDoingSpecialMove(SM_BossTheatrics))
     {
         SetVisible(true);
+        UpdateShield();
         UpdateBossHealth();
+        SetBattlePhase();
     } else {
         SetVisible(false);
     }
@@ -64,17 +65,75 @@ function OnNamePlateHidden()
 
 }
 
+function UpdateBossBattlePhase(int BattlePhase)
+{
+}
+
 protected function SetBattlePhase()
 {
+    local int BattlePhase;
     local KFPawn_MonsterBoss MonsterBoss;
 
-    if(KFPawn_MonsterBoss(BossPawn) != none)
+    BattlePhase = 1;
+
+    if(KFPawn_MonsterBoss(BossPawn) != none && KFPawn_ZedFleshpoundKing(BossPawn) == none && KFPawn_ZedBloatKing(BossPawn) == none)
     {
         MonsterBoss = KFPawn_MonsterBoss(BossPawn);
-        UpdateBossBattlePhase(MonsterBoss.GetCurrentBattlePhase());
+        BattlePhase = MonsterBoss.GetCurrentBattlePhase();
+    }
+
+    SetInt( "currentBattlePhaseColor", BattlePhaseColors[Max(BattlePhase - 1, 0)] );
+}
+
+function UpdateBossShield(float NewShieldPercect)
+{
+}
+
+protected function UpdateShield()
+{
+    local KFPawn_ZedHans Hans;
+    local KFPawn_ZedFleshpoundKing KingFp;
+    local KFPawn_ZedMatriarch Matriarch;
+
+    if(KFPawn_ZedHans(BossPawn) != none)
+    {
+        Hans = KFPawn_ZedHans(BossPawn);
+        if(Hans.bInHuntAndHealMode)
+        {
+            SetFloat( "currentShieldPercecntValue", ByteToFloat(Hans.ShieldHealthPctByte));
+        }
+        else
+        {
+            SetFloat( "currentShieldPercecntValue", 0.f);
+        }
+        
+    }
+    else if(KFPawn_ZedFleshpoundKing(BossPawn) != none)
+    {
+        KingFp = KFPawn_ZedFleshpoundKing(BossPawn);
+        if(ByteToFloat(KingFp.ShieldHealthPctByte) > 0.f)
+        {
+            SetFloat( "currentShieldPercecntValue", ByteToFloat(KingFp.ShieldHealthPctByte));
+        }
+        else
+        {
+            SetFloat( "currentShieldPercecntValue", 0.f);
+        }
+    }
+    else if(KFPawn_ZedMatriarch(BossPawn) != none)
+    {
+        Matriarch = KFPawn_ZedMatriarch(BossPawn);
+        if(Matriarch.bShieldUp)
+        {
+            SetFloat( "currentShieldPercecntValue", ByteToFloat(Matriarch.ShieldHealthPctByte));
+        }
+        else
+        {
+            SetFloat( "currentShieldPercecntValue", 0.f);
+        }
     }
     else
     {
-        UpdateBossBattlePhase(1);
+        SetFloat( "currentShieldPercecntValue", 0.f);
     }
 }
