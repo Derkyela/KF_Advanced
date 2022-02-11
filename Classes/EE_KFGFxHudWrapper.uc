@@ -44,7 +44,7 @@ protected function DrawExtraBossHealtBars()
             YL = 0;
             BarColor = NonPlayerHealth;
 
-            if(LocalKFPC.MyGFxHUD != none && LocalKFPC.MyGFxHUD.BossHealthBar != none && LocalKFPC.MyGFxHUD.BossHealthBar.BossPawn.GetMonsterPawn() == Pawn)
+            if(LocalKFPC.MyGFxHUD != none && LocalKFPC.MyGFxHUD.BossHealthBar != none && LocalKFPC.MyGFxHUD.BossHealthBar.BossPawn != none && LocalKFPC.MyGFxHUD.BossHealthBar.BossPawn.GetMonsterPawn() == Pawn)
             {
                 continue;
             }
