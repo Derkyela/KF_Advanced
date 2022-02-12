@@ -170,6 +170,7 @@ DefaultProperties
     SpawnManagerClasses(0)=class'Endless_Encore.EE_KFAISpawnManager_Endless';
     GameReplicationInfoClass=class'Endless_Encore.EE_GameReplicationInfo';
     HUDType=class'Endless_Encore.EE_KFGFXHudWrapper';
+    OutbreakEventClass=class'Endless_Encore.EE_KFOutbreakEvent_Endless';
 
     ExtraBossClassList(BAT_Hans)=class'Endless_Encore.EE_Hans';
     ExtraBossClassList(BAT_Patriarch)=class'Endless_Encore.EE_Patriarch';
