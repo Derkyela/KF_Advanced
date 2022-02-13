@@ -108,6 +108,18 @@ protected function bool ReplaceWithVersus()
     return AllowVersus && MyKFGRI.WaveNum >= StartVersusWave && bool(Rand(2));
 }
 
+function int GetMaxMonsters()
+{
+	if(OutbreakEvent.ActiveEvent.WeeklyOutbreakId == 4)
+    {
+        return 12;
+    }
+    else
+    {
+        return super.GetMaxMonsters();
+    }
+}
+
 protected function class<KFPawn_Monster> GetReplacement(class<KFPawn_Monster> OriginalMonsterClass)
 {
     switch(OriginalMonsterClass)

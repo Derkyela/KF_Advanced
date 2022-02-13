@@ -18,9 +18,9 @@ DefaultProperties
                                             (SpawnEntry=AT_Bloat,NewClass=(class'KFGameContent.KFPawn_ZedFleshpound')),
                                             (SpawnEntry=AT_Siren,NewClass=(class'KFGameContent.KFPawn_ZedFleshpoundMini')),
                                             (SpawnEntry=AT_Husk,NewClass=(class'KFGameContent.KFPawn_ZedFleshpound')),
-                                            (SpawnEntry=AT_EliteClot,NewClass=(class'KFGameContent.KFPawn_ZedFleshpound')),
-                                            (SpawnEntry=AT_EliteCrawler,NewClass=(class'KFGameContent.KFPawn_ZedFleshpound')),
-                                            (SpawnEntry=AT_EliteGoreFast,NewClass=(class'KFGameContent.KFPawn_ZedFleshpound')),
+                                            (SpawnEntry=AT_EliteClot,NewClass=(class'KFGameContent.KFPawn_ZedFleshpoundMini')),
+                                            (SpawnEntry=AT_EliteCrawler,NewClass=(class'KFGameContent.KFPawn_ZedFleshpoundMini')),
+                                            (SpawnEntry=AT_EliteGoreFast,NewClass=(class'KFGameContent.KFPawn_ZedFleshpoundMini')),
                                             (SpawnEntry=AT_EDAR_EMP,NewClass=(class'KFGameContent.KFPawn_ZedFleshpoundMini')),
                                             (SpawnEntry=AT_EDAR_Laser,NewClass=(class'KFGameContent.KFPawn_ZedFleshpoundMini')),
                                             (SpawnEntry=AT_EDAR_Rocket,NewClass=(class'KFGameContent.KFPawn_ZedFleshpoundMini'))
