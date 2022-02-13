@@ -5,7 +5,7 @@ DefaultProperties
     SetEvents[3]={(
                     EventDifficulty=2,
                     GameLength=GL_Normal,
-                    WaveAICountScale=(0.25, 0.25, 0.25, 0.25, 0.25, 0.25),
+                    WaveAICountScale=(0.4, 0.4, 0.4, 0.4, 0.4, 0.4),
                     WeeklyOutbreakId=4,
 					SpawnReplacementList={(
                                             (SpawnEntry=AT_Clot,NewClass=(class'KFGameContent.KFPawn_ZedFleshpoundMini')),

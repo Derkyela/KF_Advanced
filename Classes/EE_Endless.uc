@@ -57,17 +57,23 @@ protected function SetupConfig(string Options)
     SaveConfig();
 }
 
+function StartWave()
+{
+    //Only relevant for first wave otherwise it will be set on WaveEnded()
+    TrySetNextWaveSpecial();
+
+    //This is important so the outbreak/weekly scaling applies
+    if (KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode != INDEX_NONE)
+	{
+		OutbreakEvent.SetActiveEvent(KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode);
+	}
+
+    super.StartWave();
+}
+
 function WaveStarted()
 {
-    if(KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode == INDEX_NONE && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode == INDEX_NONE)
-    {
-        ForceSpecialOrOutbreakIfConfigured();
-    }
-
-	super.WaveStarted();
-
-    bForceOutbreakWave = false;
-    bForceSpecialWave = false;
+    super.WaveStarted();
 
     if(MyKFGRI.IsBossWave())
     {
@@ -105,14 +111,67 @@ protected function ForceSpecialOrOutbreakIfConfigured()
     }
 }
 
+/**
+ * This overwrite is important to let the wave after the boss be special and to avoid 
+ * having a special and outbreak wave at the same time.
+ */
 function bool TrySetNextWaveSpecial()
 {
-    if(KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode == INDEX_NONE && KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode == INDEX_NONE)
+    local float OutbreakPct, SpecialWavePct;
+    local int OutbreakEventIdx;
+
+    if(KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode != INDEX_NONE || KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode != INDEX_NONE || MyKFGRI.IsBossWaveNext())
     {
-        ForceSpecialOrOutbreakIfConfigured();
+        return false;
     }
 
-    return super.TrySetNextWaveSpecial();
+    ForceSpecialOrOutbreakIfConfigured();
+
+	OutbreakPct = EndlessDifficulty.GetOutbreakPctChance();
+	SpecialWavePct = EndlessDifficulty.GetSpeicalWavePctChance();
+	if (bForceOutbreakWave || (WaveNum >= OutbreakWaveStart && OutbreakPct > 0.f && FRand() < OutbreakPct))
+	{
+		if(DebugForcedOutbreakIdx == INDEX_NONE)
+		{
+			OutbreakEventIdx = Rand(OutbreakEvent.SetEvents.length);
+		}
+		else
+		{
+			`log("Forcing Outbreak" @ DebugForcedOutbreakIdx);
+			OutbreakEventIdx = DebugForcedOutbreakIdx;
+		}
+		KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentWeeklyMode = OutbreakEventIdx;
+		bForceOutbreakWave = false;
+        bForceSpecialWave = false;
+		DebugForcedOutbreakIdx = INDEX_NONE;
+		return true;
+	}
+	else if (bForceSpecialWave || (WaveNum >= SpecialWaveStart && SpecialWavePct > 0.f && FRand() < SpecialWavePct))
+	{
+		bUseSpecialWave = true;
+		if(DebugForceSpecialWaveZedType == INDEX_NONE)
+		{
+			SpecialWaveType = EndlessDifficulty.GetSpecialWaveType();
+		}
+		else
+		{
+			`log("Forcing Special Wave Type" @ EAIType(DebugForceSpecialWaveZedType));
+			SpecialWaveType = EAIType(DebugForceSpecialWaveZedType);
+		}
+		KFGameReplicationInfo_Endless(GameReplicationInfo).CurrentSpecialMode = SpecialWaveType;
+		bForceOutbreakWave = false;
+        bForceSpecialWave = false;
+		DebugForceSpecialWaveZedType = INDEX_NONE;
+		return true;
+	}
+
+	bForceOutbreakWave = false;
+	bForceSpecialWave = false;
+
+	DebugForcedOutbreakIdx = INDEX_NONE;
+	DebugForceSpecialWaveZedType = INDEX_NONE;
+
+    return false;
 }
 
 function AddExtraBosses()
