@@ -8,6 +8,7 @@ var config bool ForceSpecialWaves;
 var config bool ForceObjectiveCompletion;
 var config bool AllowVersus;
 var config byte StartVersusWave;
+var config bool UseCustomOutbreaks;
 var config int ConfigVersion;
 
 event InitGame( string Options, out string ErrorMessage )
@@ -25,6 +26,7 @@ protected function SetupConfig(string Options)
         ForceObjectiveCompletion = true;
         AllowVersus = true;
         StartVersusWave = 11;
+        UseCustomOutbreaks = true;
         ConfigVersion = 1;
     }
 
@@ -53,8 +55,23 @@ protected function SetupConfig(string Options)
         StartVersusWave = Byte(ParseOption(Options, "StartVersusWave"));
     }
 
+    if(HasOption(Options, "UseCustomOutbreaks"))
+    {
+        UseCustomOutbreaks = bool(ParseOption(Options, "UseCustomOutbreaks"));
+    }
+
 
     SaveConfig();
+}
+
+function CreateOutbreakEvent()
+{
+	if (UseCustomOutbreaks)
+	{
+		OutbreakEventClass = class'Endless_Encore.EE_KFOutbreakEvent_Endless';
+	}
+
+    super.CreateOutbreakEvent();
 }
 
 function StartWave()
@@ -229,7 +246,6 @@ DefaultProperties
     SpawnManagerClasses(0)=class'Endless_Encore.EE_KFAISpawnManager_Endless';
     GameReplicationInfoClass=class'Endless_Encore.EE_GameReplicationInfo';
     HUDType=class'Endless_Encore.EE_KFGFXHudWrapper';
-    OutbreakEventClass=class'Endless_Encore.EE_KFOutbreakEvent_Endless';
 
     ExtraBossClassList(BAT_Hans)=class'Endless_Encore.EE_Hans';
     ExtraBossClassList(BAT_Patriarch)=class'Endless_Encore.EE_Patriarch';

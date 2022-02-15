@@ -1,6 +1,5 @@
 class EE_KFAISpawnManager_Endless extends KFAISpawnManager_Endless
-    within EE_Endless
-    config(Endless_Encore);
+    within EE_Endless;
 
 function GetSpawnListFromSquad(byte SquadIdx, out array< KFAISpawnSquad > SquadsList, out array< class<KFPawn_Monster> >  AISpawnList)
 {
@@ -110,7 +109,7 @@ protected function bool ReplaceWithVersus()
 
 function int GetMaxMonsters()
 {
-	if(OutbreakEvent.ActiveEvent.WeeklyOutbreakId == 4)
+	if(OutbreakEvent.ActiveEvent.WeeklyOutbreakId == 4 && UseCustomOutbreaks)
     {   
         return super.GetMaxMonsters() * 0.5;
     }
