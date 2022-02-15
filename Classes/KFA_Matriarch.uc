@@ -1,5 +1,4 @@
-class KFA_Matriarch extends KFPawn_ZedMatriarch
-    implements(KFA_BossInterface);
+class KFA_Matriarch extends KFPawn_ZedMatriarch;
 
 simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, optional Pawn InInteractionPawn, optional INT InSpecialMoveFlags, optional bool bSkipReplication)
 {

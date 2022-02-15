@@ -1,5 +1,4 @@
-class KFA_FleshpoundKing extends KFPawn_ZedFleshpoundKing
-    implements(KFA_BossInterface);
+class KFA_FleshpoundKing extends KFPawn_ZedFleshpoundKing;
 
 simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, optional Pawn InInteractionPawn, optional INT InSpecialMoveFlags, optional bool bSkipReplication)
 {
