@@ -111,8 +111,8 @@ protected function bool ReplaceWithVersus()
 function int GetMaxMonsters()
 {
 	if(OutbreakEvent.ActiveEvent.WeeklyOutbreakId == 4)
-    {
-        return 12;
+    {   
+        return super.GetMaxMonsters() * 0.5;
     }
     else
     {
