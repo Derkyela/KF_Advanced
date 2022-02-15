@@ -1,5 +1,5 @@
-class EE_Hans extends KFPawn_ZedHans
-    implements(EE_BossInterface);
+class KFA_Matriarch extends KFPawn_ZedMatriarch
+    implements(KFA_BossInterface);
 
 simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, optional Pawn InInteractionPawn, optional INT InSpecialMoveFlags, optional bool bSkipReplication)
 {
@@ -14,4 +14,10 @@ simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, op
 function PlayBossMusic()
 {
 	//Only play the music from the initial boss
+}
+
+DefaultProperties
+{
+    ArmorInfoClass = class'KF_Advanced.KFA_KFZedArmorInfo_Matriarch';
+    ControllerClass = class'KF_Advanced.KFA_KFAIController_ZedMatriarch';
 }

@@ -1,12 +1,12 @@
-class EE_GameReplicationInfo extends KFGameReplicationInfo_Endless;
+class KFA_GameReplicationInfo extends KFGameReplicationInfo_Endless;
 
-var protected EE_Endless KFGI;
+var protected KFA_Endless KFGI;
 var protected bool CheckForObjectiveCompletion;
 
 simulated event PostBeginPlay()
 {
     super.PostBeginPlay();
-    KFGI = EE_Endless(WorldInfo.Game);
+    KFGI = KFA_Endless(WorldInfo.Game);
 }
 
 function ActivateObjective(KFInterface_MapObjective NewObjective, bool bUseEndlessSpawning = false)

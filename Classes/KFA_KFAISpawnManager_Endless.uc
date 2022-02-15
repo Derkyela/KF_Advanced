@@ -1,5 +1,5 @@
-class EE_KFAISpawnManager_Endless extends KFAISpawnManager_Endless
-    within EE_Endless;
+class KFA_KFAISpawnManager_Endless extends KFAISpawnManager_Endless
+    within KFA_Endless;
 
 function GetSpawnListFromSquad(byte SquadIdx, out array< KFAISpawnSquad > SquadsList, out array< class<KFPawn_Monster> >  AISpawnList)
 {
@@ -142,7 +142,7 @@ protected function class<KFPawn_Monster> GetReplacement(class<KFPawn_Monster> Or
         case class'KFPawn_ZedScrake':
             return class'KFPawn_ZedScrake_Versus';
         case class'KFPawn_ZedSiren':
-            return class'EE_KFPawn_ZedSiren_Versus';
+            return class'KFA_KFPawn_ZedSiren_Versus';
         case class'KFPawn_ZedStalker':
             return class'KFPawn_ZedStalker_Versus';
         default:

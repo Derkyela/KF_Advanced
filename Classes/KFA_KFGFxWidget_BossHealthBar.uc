@@ -1,4 +1,4 @@
-class EE_KFGFxWidget_BossHealthBar extends KFGFxWidget_BossHealthBar;
+class KFA_KFGFxWidget_BossHealthBar extends KFGFxWidget_BossHealthBar;
 
 var array<KFInterface_MonsterBoss> BossList;
 

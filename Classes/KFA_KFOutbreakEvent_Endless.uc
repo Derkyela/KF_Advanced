@@ -1,4 +1,4 @@
-class EE_KFOutbreakEvent_Endless extends KFOutbreakEvent_Endless;
+class KFA_KFOutbreakEvent_Endless extends KFOutbreakEvent_Endless;
 
 DefaultProperties
 {

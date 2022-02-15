@@ -1,4 +1,4 @@
-class EE_KFZedArmorInfo_Matriarch extends KFZedArmorInfo_Matriarch;
+class KFA_KFZedArmorInfo_Matriarch extends KFZedArmorInfo_Matriarch;
 
 simulated function UpdateArmorUI()
 {

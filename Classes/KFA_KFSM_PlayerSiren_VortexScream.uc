@@ -1,4 +1,4 @@
-class EE_KFSM_PlayerSiren_VortexScream extends KFSM_PlayerSiren_VortexScream;
+class KFA_KFSM_PlayerSiren_VortexScream extends KFSM_PlayerSiren_VortexScream;
 
 function Timer_CheckVortex()
 {

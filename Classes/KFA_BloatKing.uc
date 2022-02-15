@@ -1,5 +1,5 @@
-class EE_FleshpoundKing extends KFPawn_ZedFleshpoundKing
-    implements(EE_BossInterface);
+class KFA_BloatKing extends KFPawn_ZedBloatKing
+    implements(KFA_BossInterface);
 
 simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, optional Pawn InInteractionPawn, optional INT InSpecialMoveFlags, optional bool bSkipReplication)
 {
@@ -14,4 +14,9 @@ simulated event DoSpecialMove(ESpecialMove NewMove, optional bool bForceMove, op
 function PlayBossMusic()
 {
 	//Only play the music from the initial boss
+}
+
+DefaultProperties
+{
+    ArmorInfoClass=class'KF_Advanced.KFA_KFZedArmorInfo_BloatKing';
 }

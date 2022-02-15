@@ -1,5 +1,5 @@
-class EE_Endless extends KFGameInfo_Endless
-    config(Endless_Encore);
+class KFA_Endless extends KFGameInfo_Endless
+    config(Advanced);
 
 var	transient array< class<KFPawn_Monster> > ExtraBossClassList;
 
@@ -68,7 +68,7 @@ function CreateOutbreakEvent()
 {
 	if (UseCustomOutbreaks)
 	{
-		OutbreakEventClass = class'Endless_Encore.EE_KFOutbreakEvent_Endless';
+		OutbreakEventClass = class'KF_Advanced.KFA_KFOutbreakEvent_Endless';
 	}
 
     super.CreateOutbreakEvent();
@@ -242,14 +242,14 @@ function bool CheckRelevance(Actor Other)
 
 DefaultProperties
 {
-    PlayerControllerClass=class'Endless_Encore.EE_KFPlayerController';
-    SpawnManagerClasses(0)=class'Endless_Encore.EE_KFAISpawnManager_Endless';
-    GameReplicationInfoClass=class'Endless_Encore.EE_GameReplicationInfo';
-    HUDType=class'Endless_Encore.EE_KFGFXHudWrapper';
+    PlayerControllerClass=class'KF_Advanced.KFA_KFPlayerController';
+    SpawnManagerClasses(0)=class'KF_Advanced.KFA_KFAISpawnManager_Endless';
+    GameReplicationInfoClass=class'KF_Advanced.KFA_GameReplicationInfo';
+    HUDType=class'KF_Advanced.KFA_KFGFXHudWrapper';
 
-    ExtraBossClassList(BAT_Hans)=class'Endless_Encore.EE_Hans';
-    ExtraBossClassList(BAT_Patriarch)=class'Endless_Encore.EE_Patriarch';
-    ExtraBossClassList(BAT_KingFleshpound)=class'Endless_Encore.EE_FleshpoundKing';
-    ExtraBossClassList(BAT_KingBloat)=class'Endless_Encore.EE_BloatKing';
-    ExtraBossClassList(BAT_Matriarch)=class'Endless_Encore.EE_Matriarch';
+    ExtraBossClassList(BAT_Hans)=class'KF_Advanced.KFA_Hans';
+    ExtraBossClassList(BAT_Patriarch)=class'KF_Advanced.KFA_Patriarch';
+    ExtraBossClassList(BAT_KingFleshpound)=class'KF_Advanced.KFA_FleshpoundKing';
+    ExtraBossClassList(BAT_KingBloat)=class'KF_Advanced.KFA_BloatKing';
+    ExtraBossClassList(BAT_Matriarch)=class'KF_Advanced.KFA_Matriarch';
 }

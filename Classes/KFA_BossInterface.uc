@@ -1,0 +1,1 @@
+interface KFA_BossInterface;

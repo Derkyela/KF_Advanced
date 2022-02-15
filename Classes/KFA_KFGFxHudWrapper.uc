@@ -1,17 +1,17 @@
-class EE_KFGFxHudWrapper extends KFGFxHudWrapper;
+class KFA_KFGFxHudWrapper extends KFGFxHudWrapper;
 
 var const float BarHeight;
 var const float BarWidth;
 var const float XOffset;
 
-var transient protected EE_Endless KFGI;
+var transient protected KFA_Endless KFGI;
 var array <Color> BattlePhaseColors;
 
 simulated function PostBeginPlay()
 {
     super.PostBeginPlay();
 
-    KFGI = EE_Endless(WorldInfo.Game);
+    KFGI = KFA_Endless(WorldInfo.Game);
     BattlePhaseColors.AddItem(MakeColor(0, 184, 98, 255));//green
     BattlePhaseColors.AddItem(MakeColor(255, 176, 0, 255));//yellow
     BattlePhaseColors.AddItem(MakeColor(255, 96, 0, 255));//orange
@@ -117,5 +117,5 @@ DefaultProperties
     BarWidth = 400;
     XOffset = 20;
 
-    HUDClass=class'Endless_Encore.EE_KFGFxMoviePlayer_HUD';
+    HUDClass=class'KF_Advanced.KFA_KFGFxMoviePlayer_HUD';
 }

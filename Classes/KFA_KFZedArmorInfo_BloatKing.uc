@@ -1,4 +1,4 @@
-class EE_KFZedArmorInfo_BloatKing extends KFZedArmorInfo_BloatKing;
+class KFA_KFZedArmorInfo_BloatKing extends KFZedArmorInfo_BloatKing;
 
 simulated function UpdateArmorUI()
 {

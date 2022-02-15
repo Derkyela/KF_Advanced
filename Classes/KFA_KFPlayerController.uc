@@ -1,4 +1,4 @@
-class EE_KFPlayerController extends KFPlayerController;
+class KFA_KFPlayerController extends KFPlayerController;
 
 function AddZedKill( class<KFPawn_Monster> MonsterClass, byte Difficulty, class<DamageType> DT, bool bKiller )
 {
