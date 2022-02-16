@@ -138,7 +138,7 @@ protected function class<KFPawn_Monster> GetReplacement(class<KFPawn_Monster> Or
         case class'KFPawn_ZedGorefast':
             return class'KFPawn_ZedGorefast_Versus';
         case class'KFPawn_ZedHusk':
-            return class'KFPawn_ZedHusk_Versus';
+            return class'KFA_KFPawn_ZedHusk_Versus';
         case class'KFPawn_ZedScrake':
             return class'KFPawn_ZedScrake_Versus';
         case class'KFPawn_ZedSiren':
