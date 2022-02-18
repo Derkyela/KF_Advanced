@@ -196,12 +196,17 @@ function AddExtraBosses()
     local int BossesSpawned;
     local int AmountBosses;
     local array< class<KFPawn_Monster> > ExtraBosses;
+    local array< class<KFPawn_Monster> > EmptyArray;
 
     BossesSpawned = 1;
 
     AmountBosses = FCeil(float(MyKFGRI.WaveNum + 1) / 10);
     while(BossesSpawned < AmountBosses)
     {
+        //Sometimes more or less bosses are added then expected
+        //I hope resetting the ExtraBosses array will fix this
+        ExtraBosses.Length = 0;
+        ExtraBosses = EmptyArray;
         ExtraBosses.AddItem(ExtraBossClassList[Rand(ExtraBossClassList.Length)]);
         BossesSpawned += SpawnManager.SpawnSquad(ExtraBosses);
     }
