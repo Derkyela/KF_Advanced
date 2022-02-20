@@ -1,0 +1,69 @@
+[h1]Killing Floor Advanced[/h1]
+Killing Floor Advanced tries to make the normal endless gameplay more challenging and interesting.
+
+[h2]Features[/h2]
+[list]
+    [*]Adds an extra boss to the boss wave every 10 waves:
+        [list]
+            [*]Wave 10: 2 bosses
+            [*]Wave 20: 3 bosses
+            [*]Wave 30: 4 bosses
+            [*]...
+        [/list] 
+    [*]Enforces each wave (apart from the boss wave) to be either a special or outbreak wave
+    [*]Forces the players to complete objectives, the wave is endless until the objective is completed
+    [*]Adds versus zeds to the game
+    [*]Changes the poundamonium oautbreak to be a proper poundamonium (no more trash, only qps and fps)
+    [*]Dropped weapons do not despawn unless they are empty
+[/list] 
+
+[h2]Starting the Gamemode[/h2]
+Define the gamemode when starting the game/server:
+[code] ?game=KF_Advanced.KFA_Endless [/code]
+
+[h2]Options[/h2]
+Most of the features you can turn on/off as you like. You can either pass the options as parameters when starting the game or change them in the KF_Avanced.ini that is created after first launching the gamemode.
+
+[table]
+    [tr]
+        [th]Option[/th]
+        [th]Default[/th]
+        [th]Description[/th]
+    [/tr]
+    [tr]
+        [td]ForceOutbreakWaves[/td]
+        [td]True[/td]
+        [td]Whether or not to enforce that every wave is a outbreak wave. If ForceOutbreakWaves and ForceSpecialWaves are both set to True it is a 50/50 chance which one it will be.[/td]
+    [/tr]
+    [tr]
+        [td]ForceSpecialWaves[/td]
+        [td]True[/td]
+        [td]Whether or not to enforce that every wave is a special wave. If ForceOutbreakWaves and ForceSpecialWaves are both set to True it is a 50/50 chance which one it will be.[/td]
+    [/tr]
+    [tr]
+        [td]ForceObjectiveCompletion[/td]
+        [td]True[/td]
+        [td]Whether or not to enforce players to complete the objective. If set to True the wave will be endless until the objective is complete.[/td]
+    [/tr]
+    [tr]
+        [td]AllowVersus[/td]
+        [td]True[/td]
+        [td]Whether or not to allow versus zeds to be added. If set to True there is a 50% chance that the zed will be replaced by it's versus version.[/td]
+    [/tr]
+    [tr]
+        [td]StartVersusWave[/td]
+        [td]11[/td]
+        [td]The wave at which to start with spawning versus zeds.[/td]
+    [/tr]
+    [tr]
+        [td]UseCustomOutbreaks[/td]
+        [td]True[/td]
+        [td]Whether or not to use custom outbreaks (currently only the custom poundamonium).[/td]
+    [/tr]
+[/table]
+
+[b]Example configuration as parameters:[/b]
+[code] open KF-Spillway?game=KF_Advanced.KFA_Endless?ForceOutbreakWaves=1?ForceSpecialWaves=1?ForceObjectiveCompletion=1?AllowVersus=1?StartVersusWave=11?UseCustomOutbreaks=1?difficulty=3 [/code]
+
+[h2]Special Thanks[/h2]
+I'd like to thank baz, Buddah Haze, Gunner, ☣ Jacko ☣, Mr Pickles, 'Snow_white♥ and ZiFFA for testing, finding bugs and sharing their ideas and suggestions with me. Mr Pickles for creating the workshop art and briZoft for creating the [url=https://fonts2u.com/killingfont.font]KillingFont[/url] used in the artwork.
