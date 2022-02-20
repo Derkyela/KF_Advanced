@@ -193,23 +193,23 @@ function bool TrySetNextWaveSpecial()
 
 function AddExtraBosses()
 {
-    local int BossesSpawned;
-    local int AmountBosses;
-    local array< class<KFPawn_Monster> > ExtraBosses;
-    local array< class<KFPawn_Monster> > EmptyArray;
-
-    BossesSpawned = 1;
+    local int AmountBosses, I;
 
     AmountBosses = FCeil(float(MyKFGRI.WaveNum + 1) / 10);
-    while(BossesSpawned < AmountBosses)
+
+    for(I = 1; I < AmountBosses; I++)
     {
-        //Sometimes more or less bosses are added then expected
-        //I hope resetting the ExtraBosses array will fix this
-        ExtraBosses.Length = 0;
-        ExtraBosses = EmptyArray;
-        ExtraBosses.AddItem(ExtraBossClassList[Rand(ExtraBossClassList.Length)]);
-        BossesSpawned += SpawnManager.SpawnSquad(ExtraBosses);
+        AddRandomBoss();
     }
+}
+
+private function int AddRandomBoss()
+{
+    local array< class<KFPawn_Monster> > ExtraBosses;
+
+    ExtraBosses.AddItem(ExtraBossClassList[Rand(ExtraBossClassList.Length)]);
+
+    return SpawnManager.SpawnSquad(ExtraBosses);;
 }
 
 function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
