@@ -1,6 +1,10 @@
 class KFA_Survival extends KFGameInfo_Survival
     config(Advanced);
 
+var config bool AllowVersus;
+var config bool ForceObjectiveCompletion;
+var config int ConfigVersion;
+
 struct native ExtraBossWaveInfo
 {
     /** All the waves*/
@@ -10,6 +14,35 @@ struct native ExtraBossWaveInfo
 var array< ExtraBossWaveInfo > ExtraBossWaveSettings;
 var	array< class<KFPawn_Monster> > ExtraBossClassList;
 var array< class<KFPawn_Monster> > BossesToSpawn;
+var array<int> StartVersusWave;
+
+event InitGame( string Options, out string ErrorMessage )
+{
+    Super.InitGame( Options, ErrorMessage );
+    SetupConfig(Options);
+}
+
+protected function SetupConfig(string Options)
+{
+    if(ConfigVersion < 1)
+    {
+        AllowVersus = true;
+        ForceObjectiveCompletion = false;
+        ConfigVersion = 1;
+    }
+
+    if(HasOption(Options, "AllowVersus"))
+    {
+        AllowVersus = bool(ParseOption(Options, "AllowVersus"));
+    }
+
+    if(HasOption(Options, "ForceObjectiveCompletion"))
+    {
+        ForceObjectiveCompletion = bool(ParseOption(Options, "ForceObjectiveCompletion"));
+    }
+
+    SaveConfig();
+}
 
 function StartWave()
 {
@@ -129,8 +162,45 @@ function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
     super.BossDied(Killer, bCheckWaveEnded);
 }
 
+function class<KFPawn_Monster> GetAISpawnType(EAIType AIType)
+{
+    local class<KFPawn_Monster> MonsterClass;
+
+    MonsterClass = super.GetAISpawnType(AIType);
+
+    if(ReplaceWithVersus())
+    {
+        return class'KF_Advanced.KFA_Helper'.static.ReplaceWithVersus(MonsterClass);
+    }
+
+    return MonsterClass;
+}
+
+protected function bool ReplaceWithVersus()
+{
+    return AllowVersus && MyKFGRI.WaveNum >= StartVersusWave[GameLength] && bool(Rand(2));
+}
+
+function bool CheckRelevance(Actor Other)
+{
+    local KFDroppedPickup Weapon;
+
+	if(KFDroppedPickup(Other) != None)
+	{
+        if(!Weapon.bEmptyPickup)
+        {
+            Weapon = KFDroppedPickup(Other);
+		    Weapon.Lifespan = 86400;
+        }
+	}
+
+    return super.CheckRelevance(Other);;
+}
+
 DefaultProperties
 {
+    DefaultPawnClass=class'KF_Advanced.KFA_KFPawn_Human';
+    PlayerControllerClass=class'KF_Advanced.KFA_KFPlayerController';
     HUDType=class'KF_Advanced.KFA_KFGFXHudWrapper';
     GameReplicationInfoClass=class'KF_Advanced.KFA_KFGameReplicationInfo_Survival';
 
@@ -139,6 +209,10 @@ DefaultProperties
     ExtraBossClassList(BAT_KingFleshpound)=class'KF_Advanced.KFA_FleshpoundKing';
     ExtraBossClassList(BAT_KingBloat)=class'KF_Advanced.KFA_BloatKing';
     ExtraBossClassList(BAT_Matriarch)=class'KF_Advanced.KFA_Matriarch';
+
+    StartVersusWave(GL_Short) = 2;
+    StartVersusWave(GL_Normal) = 3;
+    StartVersusWave(GL_Long) = 3;
 
     //Just 4 on the boss wave because one will be spawned from the normal SpawnManager
     ExtraBossWaveSettings[GL_Short] = {(Waves[0]=0,

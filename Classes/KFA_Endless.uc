@@ -245,6 +245,25 @@ function bool CheckRelevance(Actor Other)
     return super.CheckRelevance(Other);;
 }
 
+function class<KFPawn_Monster> GetAISpawnType(EAIType AIType)
+{
+    local class<KFPawn_Monster> MonsterClass;
+
+    MonsterClass = super.GetAISpawnType(AIType);
+
+    if(ReplaceWithVersus())
+    {
+        return class'KF_Advanced.KFA_Helper'.static.ReplaceWithVersus(MonsterClass);
+    }
+
+    return MonsterClass;
+}
+
+protected function bool ReplaceWithVersus()
+{
+    return AllowVersus && MyKFGRI.WaveNum >= StartVersusWave && bool(Rand(2));
+}
+
 DefaultProperties
 {
     DefaultPawnClass=class'KF_Advanced.KFA_KFPawn_Human';
