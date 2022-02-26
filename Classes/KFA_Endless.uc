@@ -250,7 +250,7 @@ DefaultProperties
     DefaultPawnClass=class'KF_Advanced.KFA_KFPawn_Human';
     PlayerControllerClass=class'KF_Advanced.KFA_KFPlayerController';
     SpawnManagerClasses(0)=class'KF_Advanced.KFA_KFAISpawnManager_Endless';
-    GameReplicationInfoClass=class'KF_Advanced.KFA_GameReplicationInfo_Endless';
+    GameReplicationInfoClass=class'KF_Advanced.KFA_KFGameReplicationInfo_Endless';
     HUDType=class'KF_Advanced.KFA_KFGFXHudWrapper';
 
     ExtraBossClassList(BAT_Hans)=class'KF_Advanced.KFA_Hans';

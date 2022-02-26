@@ -1,4 +1,4 @@
-class KFA_GameReplicationInfo_Endless extends KFGameReplicationInfo_Endless;
+class KFA_KFGameReplicationInfo_Endless extends KFGameReplicationInfo_Endless;
 
 var protected KFA_Endless KFGI;
 var protected bool CheckForObjectiveCompletion;
