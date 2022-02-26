@@ -111,6 +111,17 @@ protected function DrawShield(KFPawn_Monster Pawn, float YOffset)
     }
 }
 
+//This is for the survival version so the boss position is not spoiled
+function CheckAndDrawRemainingZedIcons()
+{
+    if(class'KF_Advanced.KFA_Helper'.static.CheckBossesAlive(WorldInfo))
+    {
+        return;
+    }
+
+    super.CheckAndDrawRemainingZedIcons();
+}
+
 DefaultProperties
 {
     BarHeight = 25;
