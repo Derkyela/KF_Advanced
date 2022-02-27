@@ -15,6 +15,7 @@ var array< ExtraBossWaveInfo > ExtraBossWaveSettings;
 var	array< class<KFPawn_Monster> > ExtraBossClassList;
 var array< class<KFPawn_Monster> > BossesToSpawn;
 var array<int> StartVersusWave;
+var() NumPlayerMods OverrideAmmoRespawnTime;
 
 event InitGame( string Options, out string ErrorMessage )
 {
@@ -196,6 +197,25 @@ function bool CheckRelevance(Actor Other)
 
     return super.CheckRelevance(Other);;
 }
+function ResetPickups( array<KFPickupFactory> PickupList, int NumPickups )
+{
+    local ExtraBossWaveInfo WaveInfo;
+    WaveInfo = ExtraBossWaveSettings[GameLength];
+
+    if(KFPickupFactory_Ammo(PickupList[0]) != none && WaveInfo.Waves[WaveNum - 1] > 0)
+    {
+        NumPickups = AmmoPickups.Length;
+    }
+
+    super.ResetPickups(PickupList, NumPickups);
+}
+
+function CreateDifficultyInfo(string Options)
+{
+    super.CreateDifficultyInfo(Options);
+
+    DifficultyInfo.NumPlayers_AmmoPickupRespawnTime = OverrideAmmoRespawnTime;
+}
 
 DefaultProperties
 {
@@ -213,6 +233,16 @@ DefaultProperties
     StartVersusWave(GL_Short) = 2;
     StartVersusWave(GL_Normal) = 3;
     StartVersusWave(GL_Long) = 3;
+
+    OverrideAmmoRespawnTime={(
+                                PlayersMod[0]=25.000000,
+                                PlayersMod[1]=12.000000,
+                                PlayersMod[2]=8.000000,
+                                PlayersMod[3]=5.000000,
+                                PlayersMod[4]=4.000000,
+                                PlayersMod[5]=3.000000,
+                                ModCap=1.000000
+                    )};
 
     //Just 4 on the boss wave because one will be spawned from the normal SpawnManager
     ExtraBossWaveSettings[GL_Short] = {(Waves[0]=0,
