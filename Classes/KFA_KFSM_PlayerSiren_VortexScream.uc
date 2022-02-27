@@ -58,3 +58,8 @@ function Timer_CheckVortex()
 		KFPOwner.ClearTimer( nameOf(Timer_CheckVortex), self );
 	}
 }
+
+DefaultProperties
+{
+	VortexDuration=2
+}
