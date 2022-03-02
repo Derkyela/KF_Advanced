@@ -198,17 +198,18 @@ function bool CheckRelevance(Actor Other)
 
     return super.CheckRelevance(Other);;
 }
-function ResetPickups( array<KFPickupFactory> PickupList, int NumPickups )
+
+function ResetAllPickups()
 {
     local ExtraBossWaveInfo WaveInfo;
     WaveInfo = ExtraBossWaveSettings[GameLength];
 
-    if(KFPickupFactory_Ammo(PickupList[0]) != none && WaveInfo.Waves[WaveNum - 1] > 0)
+    if(WaveInfo.Waves[WaveNum - 1] > 0)
     {
-        NumPickups = AmmoPickups.Length;
+        NumAmmoPickups = Max((AmmoPickups.Length - 1) / (float(WaveNum) / float(WaveMax)), 0);
     }
 
-    super.ResetPickups(PickupList, NumPickups);
+ 	Super.ResetAllPickups();
 }
 
 function CreateDifficultyInfo(string Options)
