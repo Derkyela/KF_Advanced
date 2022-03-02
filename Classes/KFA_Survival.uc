@@ -180,7 +180,7 @@ function class<KFPawn_Monster> GetAISpawnType(EAIType AIType)
 
 protected function bool ReplaceWithVersus()
 {
-    return AllowVersus && MyKFGRI.WaveNum >= StartVersusWave[GameLength] && bool(Rand(2));
+    return AllowVersus && MyKFGRI.WaveNum >= StartVersusWave[GameLength] && Rand(3) == 2;
 }
 
 function bool CheckRelevance(Actor Other)
