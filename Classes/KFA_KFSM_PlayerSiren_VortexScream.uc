@@ -61,5 +61,5 @@ function Timer_CheckVortex()
 
 DefaultProperties
 {
-	VortexDuration=2
+	VortexDuration=1.5
 }
