@@ -149,6 +149,7 @@ function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
 
     if(!MyKFGRI.IsBossWave())
     {
+        CheckWaveEnd();
         return;
     }
 
