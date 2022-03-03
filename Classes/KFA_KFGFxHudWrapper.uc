@@ -33,7 +33,15 @@ protected function DrawExtraBossHealtBars()
     local Color BarColor;
     local KFPlayerController LocalKFPC;
 
-    YOffset = 450;
+    if(KFGRI.CurrentObjective == none)
+    {
+        YOffset = 450;
+    }
+    else
+    {
+        YOffset = 750;
+    }
+    
     foreach WorldInfo.AllPawns(class'KFPawn_Monster', Pawn)
     {
         if(Pawn.IsABoss() && Pawn.IsAliveAndWell())
