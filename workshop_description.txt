@@ -1,7 +1,8 @@
 [h1]Killing Floor Advanced[/h1]
-Killing Floor Advanced tries to make the normal endless gameplay more challenging and interesting.
+Killing Floor Advanced tries to make the normal endless and survival gameplay more challenging and interesting.
 
 [h2]Features[/h2]
+[h3]Endless[/h3]
 [list]
     [*]Adds an extra boss to the boss wave every 10 waves:
         [list]
@@ -17,13 +18,37 @@ Killing Floor Advanced tries to make the normal endless gameplay more challengin
     [*]Dropped weapons do not despawn unless they are empty
 [/list] 
 
+[h3]Survival[/h3]
+[list]
+    [*]Spawns bosses throughout the waves and all five in the boss wave
+    [*]Forces the players to complete objectives, the wave is endless until the objective is completed
+    [*]Adds versus zeds to the game
+    [*]Dropped weapons do not despawn unless they are empty
+    [*]Increased amount of ammunition pickups on waves with bosses
+    [*]Increased ammo pickup respawn rate (like on "Abandon all Hope" weekly)
+[/list] 
+
 [h2]Starting the Gamemode[/h2]
-Define the gamemode when starting the game/server:
+If you would like to use it in single player subscribe to it. If you would like to add it to a server add it in your KFEngine.ini:
+[code]
+[OnlineSubsystemSteamworks.KFWorkshopSteamworks]
+ServerSubscribedWorkshopItems=2759816519
+[/code]
+
+[h3]Endless[/h3]
+You can start an Endless game by using:
 [code] ?game=KF_Advanced.KFA_Endless [/code]
 
-[h2]Options[/h2]
-Most of the features you can turn on/off as you like. You can either pass the options as parameters when starting the game or change them in the KF_Avanced.ini that is created after first launching the gamemode.
+[h3]Survival[/h3]
+You can start a Survival game by using:
+[code] ?game=KF_Advanced.KFA_Survival [/code]
 
+[h2]Options[/h2]
+Most of the features can be turned on or off as you like. You can either pass the options as parameters when starting the game or change them in the KF_Avanced.ini that is created after first launching the gamemode.
+
+[h3]Endless[/h3]
+Change the configuration under:
+[code][KF_Advanced.KFA_Endless][/code]
 [table]
     [tr]
         [th]Option[/th]
@@ -65,6 +90,30 @@ Most of the features you can turn on/off as you like. You can either pass the op
 [b]Example configuration as parameters:[/b]
 [code] open KF-Spillway?game=KF_Advanced.KFA_Endless?ForceOutbreakWaves=1?ForceSpecialWaves=1?ForceObjectiveCompletion=1?AllowVersus=1?StartVersusWave=11?UseCustomOutbreaks=1?difficulty=3 [/code]
 
+[h3]Survival[/h3]
+Change the configuration under:
+[code][KF_Advanced.KFA_Survival][/code]
+[table]
+    [tr]
+        [th]Option[/th]
+        [th]Default[/th]
+        [th]Description[/th]
+    [/tr]
+    [tr]
+        [td]ForceObjectiveCompletion[/td]
+        [td]False[/td]
+        [td]Whether or not to enforce players to complete the objective. If set to True the wave will be endless until the objective is complete. This gamemode is already very difficult, it is [b]not recommended[/b] to turn it on.[/td]
+    [/tr]
+    [tr]
+        [td]AllowVersus[/td]
+        [td]True[/td]
+        [td]Whether or not to allow versus zeds to be added. If set to True there is a 33% chance that the zed will be replaced by it's versus version.[/td]
+    [/tr]
+[/table]
+
+[b]Example configuration as parameters:[/b]
+[code] open KF-Spillway?game=KF_Advanced.KFA_Endless?ForceObjectiveCompletion=0?AllowVersus=1?difficulty=3?gamelength=3 [/code]
+
 [h2]Bugsplats/Crashes[/h2]
 In case you experience bugsplats/crashes [url=https://steamcommunity.com/workshop/filedetails/discussion/2050370803/2259060348501938096/]this fix from Controlled Difficulty - Blackout Edition[/url] seems to help many gamemodes and mutators as well as this.
 [quote=H U N ナ E R]The problem is caused by TWI changing several values in the KF2's engine configuration.
@@ -74,7 +123,7 @@ SizeOfPermanentObjectPool=0
 
 If you have other numeric values, make them as written above and save. After changes bugsplats in more cases should disappear.[/quote]
 
-This mod seems to be incompatibel with KF-Elysium.
+The Endless gamemode seems to be incompatibel with KF-Elysium.
 
 [h2]Special Thanks[/h2]
-I'd like to thank baz, Buddah Haze, Gunner, ☣ Jacko ☣, Mr Pickles, 'Snow_white♥ and ZiFFA for testing, finding bugs and sharing their ideas and suggestions with me. Mr Pickles for creating the workshop art and briZoft for creating the [url=https://fonts2u.com/killingfont.font]KillingFont[/url] used in the artwork.
+I'd like to thank baz, Buddah Haze, Culture War, Gunner, ☣ Jacko ☣, Mr Pickles, 'Snow_white♥ and ZiFFA for testing, finding bugs and sharing their ideas and suggestions with me. Mr Pickles for creating the workshop art and briZoft for creating the [url=https://fonts2u.com/killingfont.font]KillingFont[/url] used in the artwork.
