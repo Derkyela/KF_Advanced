@@ -1,5 +1,6 @@
 class KFA_Survival extends KFGameInfo_Survival
-    config(Advanced);
+    config(Advanced)
+    implements(KFA_GameInfoInterface);
 
 var config bool AllowVersus;
 var config bool ForceObjectiveCompletion;
@@ -16,6 +17,7 @@ var	array< class<KFPawn_Monster> > ExtraBossClassList;
 var array< class<KFPawn_Monster> > BossesToSpawn;
 var array<int> StartVersusWave;
 var() NumPlayerMods OverrideAmmoRespawnTime;
+var bool ShowBossCinematic;
 
 event InitGame( string Options, out string ErrorMessage )
 {
@@ -48,6 +50,11 @@ protected function SetupConfig(string Options)
 function StartWave()
 {
     local float TimerDelay;
+
+    if(MyKFGRI.IsBossWaveNext())
+    {
+        ShowBossCinematic = true;
+    }
 
     super.StartWave();
 
@@ -142,9 +149,7 @@ function WaveStarted()
 }
 
 function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
-{
-    local KFPawn_Monster Pawn;
-    
+{   
     DramaticEvent(1);
 
     if(!MyKFGRI.IsBossWave())
@@ -153,12 +158,9 @@ function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
         return;
     }
 
-    foreach WorldInfo.AllPawns(class'KFPawn_Monster', Pawn)
+    if(class'KF_Advanced.KFA_Helper'.static.CheckBossesAlive(WorldInfo))
     {
-        if(Pawn.IsABoss() && Pawn.IsAliveAndWell())
-        {
-            return;
-        }
+        return;
     }
 
     super.BossDied(Killer, bCheckWaveEnded);
@@ -181,6 +183,11 @@ function class<KFPawn_Monster> GetAISpawnType(EAIType AIType)
 protected function bool ReplaceWithVersus()
 {
     return AllowVersus && MyKFGRI.WaveNum >= StartVersusWave[GameLength] && Rand(3) == 2;
+}
+
+function class<KFPawn_Monster> GetBossAISpawnType()
+{
+    return class'KF_Advanced.KFA_Helper'.static.ReplaceBossClass(super.GetBossAISpawnType());
 }
 
 function bool CheckRelevance(Actor Other)
@@ -219,12 +226,23 @@ function CreateDifficultyInfo(string Options)
     DifficultyInfo.NumPlayers_AmmoPickupRespawnTime = OverrideAmmoRespawnTime;
 }
 
+function bool GetShowBossCinematic()
+{
+    return ShowBossCinematic;
+}
+
+function SetShowBossCinematic(bool ShouldShowBossCinematic)
+{
+    ShowBossCinematic = ShouldShowBossCinematic;
+}
+
 DefaultProperties
 {
     DefaultPawnClass=class'KF_Advanced.KFA_KFPawn_Human';
     PlayerControllerClass=class'KF_Advanced.KFA_KFPlayerController';
     HUDType=class'KF_Advanced.KFA_KFGFXHudWrapper';
     GameReplicationInfoClass=class'KF_Advanced.KFA_KFGameReplicationInfo_Survival';
+    ShowBossCinematic=false;
 
     ExtraBossClassList(BAT_Hans)=class'KF_Advanced.KFA_Hans';
     ExtraBossClassList(BAT_Patriarch)=class'KF_Advanced.KFA_Patriarch';

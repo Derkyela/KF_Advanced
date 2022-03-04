@@ -1,5 +1,6 @@
 class KFA_Endless extends KFGameInfo_Endless
-    config(Advanced);
+    config(Advanced)
+    implements(KFA_GameInfoInterface);
 
 var	transient array< class<KFPawn_Monster> > ExtraBossClassList;
 
@@ -10,6 +11,8 @@ var config bool AllowVersus;
 var config byte StartVersusWave;
 var config bool UseCustomOutbreaks;
 var config int ConfigVersion;
+
+var bool ShowBossCinematic;
 
 event InitGame( string Options, out string ErrorMessage )
 {
@@ -226,6 +229,8 @@ function BossDied(Controller Killer, optional bool bCheckWaveEnded = true)
         }
     }
 
+    ShowBossCinematic = true;
+
     super.BossDied(Killer, bCheckWaveEnded);
 }
 
@@ -264,6 +269,21 @@ protected function bool ReplaceWithVersus()
     return AllowVersus && MyKFGRI.WaveNum >= StartVersusWave && bool(Rand(2));
 }
 
+function class<KFPawn_Monster> GetBossAISpawnType()
+{
+    return class'KF_Advanced.KFA_Helper'.static.ReplaceBossClass(super.GetBossAISpawnType());
+}
+
+function bool GetShowBossCinematic()
+{
+    return ShowBossCinematic;
+}
+
+function SetShowBossCinematic(bool ShouldShowBossCinematic)
+{
+    ShowBossCinematic = ShouldShowBossCinematic;
+}
+
 DefaultProperties
 {
     DefaultPawnClass=class'KF_Advanced.KFA_KFPawn_Human';
@@ -271,6 +291,7 @@ DefaultProperties
     SpawnManagerClasses(0)=class'KF_Advanced.KFA_KFAISpawnManager_Endless';
     GameReplicationInfoClass=class'KF_Advanced.KFA_KFGameReplicationInfo_Endless';
     HUDType=class'KF_Advanced.KFA_KFGFXHudWrapper';
+    ShowBossCinematic=true;
 
     ExtraBossClassList(BAT_Hans)=class'KF_Advanced.KFA_Hans';
     ExtraBossClassList(BAT_Patriarch)=class'KF_Advanced.KFA_Patriarch';

@@ -45,3 +45,22 @@ static function class<KFPawn_Monster> ReplaceWithVersus(class<KFPawn_Monster> Or
             return OriginalMonsterClass;
     }
 }
+
+static function class<KFPawn_Monster> ReplaceBossClass(class<KFPawn_Monster> OriginalClass)
+{
+    switch(OriginalClass)
+    {
+        case class'KFGameContent.KFPawn_ZedHans':
+            return class'KF_Advanced.KFA_Hans';
+        case class'KFGameContent.KFPawn_ZedPatriarch':
+            return class'KF_Advanced.KFA_Patriarch';
+        case class'KFGameContent.KFPawn_ZedFleshpoundKing':
+            return class'KF_Advanced.KFA_FleshpoundKing';
+        case class'KFGameContent.KFPawn_ZedBloatKing':
+            return class'KF_Advanced.KFA_BloatKing';
+        case class'KFGameContent.KFPawn_ZedMatriarch':
+            return class'KF_Advanced.KFA_Matriarch';
+        default:
+            return OriginalClass;
+    }
+}
